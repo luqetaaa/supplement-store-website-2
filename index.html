@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NUTRI+ | Loja de Suplementos</title>
+  <meta name="description" content="Suplementos para performance, recuperação e saúde. Entrega rápida em todo o Brasil." />
+  <meta property="og:title" content="NUTRI+ | Loja de Suplementos" />
+  <meta property="og:description" content="Performance que você sente. Envio rápido e produtos oficiais." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Toasts -->
+  <div id="toasts" class="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Modal Produto -->
+  <dialog id="productModal" class="modal" aria-labelledby="modalTitle">
+    <form method="dialog" class="modal-card" id="modalCard">
+      <header class="modal-header">
+        <h3 id="modalTitle">Detalhes do produto</h3>
+        <button class="icon-btn" value="cancel" aria-label="Fechar">✕</button>
+      </header>
+      <div class="modal-body" id="modalBody"></div>
+      <footer class="modal-footer">
+        <button class="btn" id="modalAddBtn" type="button">Adicionar ao carrinho</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Cart Overlay -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+  <!-- Cart Drawer -->
+  <aside class="cart" id="cart" aria-label="Carrinho">
+    <header class="cart-header">
+      <h2>Carrinho</h2>
+      <button class="icon-btn" id="closeCart" aria-label="Fechar carrinho">✕</button>
+    </header>
+    <div id="cartItems" class="cart-items" role="list"></div>
+    <footer class="cart-footer">
+      <div class="totals">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">R$ 0,00</strong>
+      </div>
+      <button class="btn checkout" id="checkoutBtn">Finalizar compra</button>
+    </footer>
+  </aside>
+
+  <!-- Promo bar -->
+  <div class="promo" role="note">💥 FRETE GRÁTIS acima de R$ 199 para Sudeste</div>
+
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="#"><span class="brand-mark">NUTRI</span><span class="brand-plus">+</span></a>
+
+      <nav class="main-nav">
+        <a href="#produtos">Produtos</a>
+        <a href="#vantagens">Vantagens</a>
+        <a href="#newsletter">Ofertas</a>
+      </nav>
+
+      <form class="search" id="searchForm" role="search" aria-label="Buscar produtos">
+        <input id="searchInput" type="search" placeholder="Buscar suplemento..." aria-label="Buscar" />
+        <button class="icon-btn" aria-label="Pesquisar">🔎</button>
+      </form>
+
+      <div class="actions">
+        <select id="categorySelect" class="select" aria-label="Filtrar por categoria">
+          <option value="todas">Todas</option>
+          <option value="Whey Protein">Whey Protein</option>
+          <option value="Creatina">Creatina</option>
+          <option value="Pré-treino">Pré-treino</option>
+          <option value="Aminoácidos">Aminoácidos</option>
+          <option value="Vitaminas">Vitaminas</option>
+          <option value="Acessórios">Acessórios</option>
+        </select>
+
+        <label class="chk">
+          <input type="checkbox" id="onlyFavs">
+          <span>❤️ Favoritos</span>
+        </label>
+
+        <button class="icon-btn" id="themeToggle" aria-label="Alternar tema">🌙</button>
+
+        <button class="icon-btn cart-btn" id="openCart" aria-label="Abrir carrinho">
+          🛒 <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1>Performance que você sente.</h1>
+        <p>Suplementos selecionados para treinos mais fortes, recuperação mais rápida e resultados visíveis.</p>
+        <a href="#produtos" class="btn">Ver produtos</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="pill"></div>
+        <div class="jar"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="produtos" class="products-area">
+      <header class="products-header">
+        <h2>Produtos em destaque</h2>
+        <div class="controls">
+          <select id="sortSelect" class="select" aria-label="Ordenar">
+            <option value="relevance">Relevância</option>
+            <option value="price_asc">Preço: menor → maior</option>
+            <option value="price_desc">Preço: maior → menor</option>
+            <option value="name_asc">Nome: A → Z</option>
+          </select>
+        </div>
+      </header>
+
+      <!-- Skeletons enquanto carrega -->
+      <div id="grid" class="grid" role="list" aria-busy="true">
+        <div class="skeleton-card"></div><div class="skeleton-card"></div>
+        <div class="skeleton-card"></div><div class="skeleton-card"></div>
+        <div class="skeleton-card"></div><div class="skeleton-card"></div>
+        <div class="skeleton-card"></div><div class="skeleton-card"></div>
+      </div>
+    </section>
+
+    <section id="vantagens" class="usp">
+      <div class="usp-item">
+        <div class="usp-ico">⚡</div>
+        <h3>Envio rápido</h3>
+        <p>Postagem em até 24h úteis para todo o Brasil.</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-ico">✅</div>
+        <h3>Produtos oficiais</h3>
+        <p>Trabalhamos apenas com fornecedores homologados.</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-ico">🔄</div>
+        <h3>Troca fácil</h3>
+        <p>7 dias para troca/devolução sem burocracia.</p>
+      </div>
+    </section>
+
+    <section id="newsletter" class="newsletter">
+      <div class="nl-box">
+        <h3>Ganhe 10% OFF no primeiro pedido</h3>
+        <p>Assine nossa newsletter e receba promoções e novidades.</p>
+        <form id="nlForm" class="nl-form">
+          <input type="email" id="nlEmail" placeholder="Seu e-mail" required aria-label="Seu e-mail">
+          <button class="btn" type="submit">Quero receber</button>
+        </form>
+        <small id="nlMsg" class="nl-msg" role="status" aria-live="polite"></small>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> NUTRI+. Todos os direitos reservados.</p>
+      <nav class="footer-nav">
+        <a href="#">Política de privacidade</a>
+        <a href="#">Termos de uso</a>
+        <a href="#">Contato</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
